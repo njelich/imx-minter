@@ -14,13 +14,21 @@ const apiAddress =
     ? "https://api.ropsten.x.immutable.com/v1"
     : "https://api.x.immutable.com/v1";
 const infuraUri = `https://${process.env.NETWORK}.infura.io/v3/${process.env.INFURA_ID}`;
+const starkAddress =
+  process.env.NETWORK === "ropsten"
+    ? "0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef"
+    : "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9";
+const registrationAddress =
+  process.env.NETWORK === "ropsten"
+    ? "0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864"
+    : "0x72a06bf2a1CE5e39cBA06c0CAb824960B587d64c";
 
 async function mint() {
   const immutableXClient = await ImmutableXClient.build({
     publicApiUrl: apiAddress,
     signer,
-    starkContractAddress: process.env.STARK_ADDRESS,
-    registrationContractAddress: process.env.REGISTRATION_ADDRESS,
+    starkContractAddress: starkAddress,
+    registrationContractAddress: registrationAddress,
   });
   await mongoClient.connect();
   const collection = mongoClient.db("db").collection("transactions");
